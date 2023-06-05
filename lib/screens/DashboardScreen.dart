@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:traveldiary/state%20management/appdata.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -8,11 +10,15 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  String? name;
+
   @override
   Widget build(BuildContext context) {
+    name = Provider.of<AppData>(context).name;
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Travel Diary'),
+          title: Text('Travel Diary ${name}'),
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 0,

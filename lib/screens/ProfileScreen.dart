@@ -36,6 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           future:
               FirebaseFirestore.instance.collection('users').doc(userId).get(),
           builder: (context, snapshot) {
+            print(snapshot.data!['firstname']);
             if (snapshot.hasData) {
               return Column(
                 children: [
