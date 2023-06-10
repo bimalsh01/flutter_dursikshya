@@ -6,13 +6,15 @@ class APIService{
 
   Future<bool> login(String email, String password) async {
       bool isLogin = false;
+      String? uid;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       try{
         await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: email, password: password)
           .then((value) => {
-                prefs.setString('id', value.user!.uid),
+                uid = value.user!.uid,
+
                 isLogin = true
               })
           .onError((error, stackTrace) => {
