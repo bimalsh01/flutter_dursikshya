@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:traveldiary/apis/APIService.dart';
+import 'package:traveldiary/apis/api_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // login function
   Future _userLogin() async {
     APIService()
-        .login(_emailController.text, _passwordController.text)
+        .login(_emailController.text, _passwordController.text, context)
         .then((value) => {
               if (value == true)
                 {

@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 // impot firebase_storage package
 
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:traveldiary/modal/PostModal.dart';
 import 'package:traveldiary/state%20management/appdata.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -60,7 +61,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
       url = await ref.getDownloadURL();
     } catch (e) {
-      print(e);
+      print('Failed to uload image $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to uload image'),
@@ -69,13 +70,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
 
     try {
-      await FirebaseFirestore.instance.collection('posts').add({
-        'photo': url,
-        'createdAt': Timestamp.now(),
-        'title': titleController.text,
-        'name': name,
-        'id': FirebaseAuth.instance.currentUser!.uid,
-      });
+      final post = PostModal(
+        title: titleController.text,
+        userId: FirebaseAuth.instance.currentUser!.uid,
+        name: name,
+        createdAt: DateTime.now(),
+        url: url,
+      );
+
+      // add post to firestore
+      await FirebaseFirestore.instance.collection('posts').add(post.toJson());
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Post added'),
@@ -93,10 +98,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    name = Provider.of<AppData>(context).name;
+    name = Provider.of<AppData>(context).firstname;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add post'),
+        title: Text('Add post $name'),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AppData extends ChangeNotifier {
-  String name = "Bimal Stha updated";
+  String? firstname;
+  String? lastname;
+  String? email;
+  String? username;
 
-  void updateName(String name) {
-    name = name;
+  void updateUser(
+      String firstname, String lastname, String email, String username) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.email = email;
+    this.username = username;
+
     notifyListeners();
   }
 }
