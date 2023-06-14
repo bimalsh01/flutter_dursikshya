@@ -60,6 +60,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 trailing: const Icon(Icons.arrow_forward_ios),
               ),
               ListTile(
+                leading: const Icon(Icons.content_copy),
+                title: const Text('My Posts'),
+                subtitle: const Text('Click here to view my posts'),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  Navigator.pushNamed(context, '/myposts');
+                },
+              ),
+              ListTile(
                 leading: const Icon(Icons.security),
                 title: const Text('Change password'),
                 subtitle: const Text('Set your new password'),

@@ -5,6 +5,7 @@ import 'package:traveldiary/screens/AddPostScreen.dart';
 import 'package:traveldiary/screens/BottomNavbarScreen.dart';
 import 'package:traveldiary/screens/DashboardScreen.dart';
 import 'package:traveldiary/screens/LoginScreen.dart';
+import 'package:traveldiary/screens/MyPostScreen.dart';
 import 'package:traveldiary/screens/ProfileScreen.dart';
 import 'package:traveldiary/screens/RegisterScreen.dart';
 import 'package:traveldiary/screens/SplashScreen.dart';
@@ -31,6 +32,7 @@ void main() async {
           '/buttonNavbarScreen': (context) => const BottomNavbarScreen(),
           '/addpost': (context) => const AddPostScreen(),
           '/profile': (context) => const ProfileScreen(),
+          '/myposts': (context) => const MyPostScreen(),
         },
       )));
 }
