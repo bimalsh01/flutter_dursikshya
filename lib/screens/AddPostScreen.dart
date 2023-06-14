@@ -24,7 +24,7 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   File? img;
-  String? name;
+  String? username;
   TextEditingController titleController = TextEditingController();
 
   Future _loadImage(ImageSource imageSource) async {
@@ -73,7 +73,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       final post = PostModal(
         title: titleController.text,
         userId: FirebaseAuth.instance.currentUser!.uid,
-        name: name,
+        username: username,
         createdAt: DateTime.now(),
         url: url,
       );
@@ -98,10 +98,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    name = Provider.of<AppData>(context).firstname;
+    username = Provider.of<AppData>(context).username;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add post $name'),
+        title: Text('Add post'),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,

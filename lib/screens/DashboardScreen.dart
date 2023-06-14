@@ -24,31 +24,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
           foregroundColor: Colors.black,
           elevation: 0,
         ),
-        body: FutureBuilder(
-            future: FirebaseFirestore.instance.collection('posts').doc().get(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Card(
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Icon(Icons.account_circle),
-                        title: Text('Bimal Shrestha'),
-                        subtitle: Text('posted: 2 hours ago'),
-                      ),
-                      Text('This is my first post. I am so excited to be here.',
-                          style: TextStyle(fontSize: 18)),
-                      SizedBox(height: 10),
-                      Image.asset('assets/images/abc.jpg',
-                          height: 250,
-                          width: double.infinity,
-                          fit: BoxFit.cover),
-                    ],
-                  ),
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            }));
+        body: Card(
+          child: Column(
+            children: [
+              ListTile(
+                leading: Icon(Icons.account_circle),
+                title: Text('Bimal Shrestha'),
+                subtitle: Text('posted: 2 hours ago'),
+              ),
+              Text('This is my first post. I am so excited to be here.',
+                  style: TextStyle(fontSize: 18)),
+              SizedBox(height: 10),
+              Image.asset('assets/images/abc.jpg',
+                  height: 250, width: double.infinity, fit: BoxFit.cover),
+            ],
+          ),
+        ));
   }
 }

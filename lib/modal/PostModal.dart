@@ -1,14 +1,14 @@
 class PostModal {
   String title;
   String userId;
-  String? name;
+  String? username;
   DateTime? createdAt;
   String? url;
 
   PostModal({
     required this.title,
     required this.userId,
-    this.name,
+    this.username,
     this.createdAt,
     this.url,
   });
@@ -17,7 +17,7 @@ class PostModal {
     return {
       'title': title,
       'userId': userId,
-      'name': name,
+      'username': username,
       'createdAt': createdAt,
       'url': url,
     };

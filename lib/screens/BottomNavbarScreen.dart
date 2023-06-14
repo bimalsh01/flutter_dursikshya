@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:traveldiary/screens/AddPostScreen.dart';
 import 'package:traveldiary/screens/DashboardScreen.dart';
 import 'package:traveldiary/screens/ProfileScreen.dart';
+import 'package:traveldiary/state%20management/appdata.dart';
 
 class BottomNavbarScreen extends StatefulWidget {
   const BottomNavbarScreen({super.key});
@@ -21,6 +23,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    Provider.of<AppData>(context, listen: false).loadData();
     return Scaffold(
       body: Center(child: lstWidget.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
