@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:traveldiary/state%20management/appdata.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '../modal/PostModal.dart';
 
 class MyPostScreen extends StatefulWidget {
   const MyPostScreen({super.key});
@@ -45,6 +49,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
 
   // load image from camera or gallery
   File? img;
+  String? username;
 
   Future _loadImage(ImageSource imageSource) async {
     //  request permission by using permission_handler package
@@ -71,7 +76,9 @@ class _MyPostScreenState extends State<MyPostScreen> {
 
   // edit post dialog
   TextEditingController _editTitleController = TextEditingController();
-  Future<void> _editPostDialog(String id, String url) async {
+  Future<void> _editPostDialog(String id, String title, String url) async {
+    _editTitleController.text = title;
+
     return showDialog(
         context: context,
         builder: (context) {
@@ -86,13 +93,103 @@ class _MyPostScreenState extends State<MyPostScreen> {
                       hintText: 'Enter title',
                     ),
                   ),
-                  Image.network(url, width: 100, height: 100),
+                  // Image.network(url, width: 100, height: 100),
+
+                  // show image from camera or gallery #IISUE_1
+                  img == null
+                      ? Image.network(url, width: 100, height: 100)
+                      : Image.file(img!, width: 100, height: 100),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            _loadImage(ImageSource.camera);
+                          },
+                          child: Text('Camera')),
+                      ElevatedButton(
+                          onPressed: () {
+                            _loadImage(ImageSource.gallery);
+                          },
+                          child: Text('Gallary')),
+                    ],
+                  )
                 ],
               ),
             ),
             actions: [
-              TextButton(onPressed: () {}, child: Text('Cancel')),
-              TextButton(onPressed: () {}, child: Text('Update')),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel')),
+              TextButton(
+                  onPressed: () async {
+                    if (img != null) {
+                      try {
+                        final path = 'posts/${DateTime.now()}.png';
+                        final ref = await firebase_storage
+                            .FirebaseStorage.instance
+                            .ref()
+                            .child(path);
+
+                        await ref.putFile(img!);
+                        final newUrl = await ref.getDownloadURL();
+
+                        final post = PostModal(
+                          title: _editTitleController.text,
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          username: username,
+                          createdAt: DateTime.now(),
+                          url: newUrl,
+                        );
+
+                        await FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc(id)
+                            .update(post.toJson());
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Post Updated with image!')));
+
+                        Navigator.pop(context);
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Failed to update post with image')));
+                      }
+                    } else {
+                      //  if no image is selected
+                      try {
+                        final post = PostModal(
+                          title: _editTitleController.text,
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          username: username,
+                          createdAt: DateTime.now(),
+                          url: url,
+                        );
+
+                        await FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc(id)
+                            .update(post.toJson());
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Post Updated')));
+
+                        Navigator.pop(context);
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    'Failed to update post without image')));
+                      }
+                    }
+                  },
+                  child: const Text('Update')),
             ],
           );
         });
@@ -100,6 +197,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    username = Provider.of<AppData>(context).username;
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Posts'),
@@ -128,7 +226,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              _editPostDialog(ds.id, ds['url']);
+                              _editPostDialog(ds.id, ds['title'], ds['url']);
                             },
                             icon: Icon(Icons.edit),
                           ),

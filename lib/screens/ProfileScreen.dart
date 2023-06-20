@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-  import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,6 +58,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: const Text('Edit Profile'),
                 subtitle: const Text('Click here to edit profile'),
                 trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  Navigator.pushNamed(context, '/editprofile');
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.content_copy),

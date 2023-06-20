@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:traveldiary/screens/AddPostScreen.dart';
 import 'package:traveldiary/screens/BottomNavbarScreen.dart';
 import 'package:traveldiary/screens/DashboardScreen.dart';
+import 'package:traveldiary/screens/EditProfileScreen.dart';
 import 'package:traveldiary/screens/LoginScreen.dart';
 import 'package:traveldiary/screens/MyPostScreen.dart';
 import 'package:traveldiary/screens/ProfileScreen.dart';
@@ -33,6 +34,7 @@ void main() async {
           '/addpost': (context) => const AddPostScreen(),
           '/profile': (context) => const ProfileScreen(),
           '/myposts': (context) => const MyPostScreen(),
+          '/editprofile': (context) => const EditProfileScreen(),
         },
       )));
 }
