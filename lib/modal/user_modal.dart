@@ -14,4 +14,13 @@ class UserModal {
         email: json['email'],
         username: json['username']);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'firstname': firstname,
+      'lastname': lastname,
+      'email': email,
+      'username': username,
+    };
+  }
 }
