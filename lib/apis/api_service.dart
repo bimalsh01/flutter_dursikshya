@@ -23,7 +23,8 @@ class APIService {
             decodedJson.firstname!,
             decodedJson.lastname!,
             decodedJson.email!,
-            decodedJson.username!);
+            decodedJson.username!,
+            decodedJson.profile!);
 
         isLogin = true;
       }).onError((error, stackTrace) {

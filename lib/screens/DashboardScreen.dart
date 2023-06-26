@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:traveldiary/state%20management/appdata.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:traveldiary/widgets/CardWidget.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -34,48 +35,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     itemBuilder: (context, index) {
                       DocumentSnapshot ds = snapshot.data!.docs[index];
 
-                      return Card(
-                        child: Column(
-                          children: [
-                            ListTile(
-                              leading: Icon(Icons.account_circle),
-                              title: Text('@${ds['username']}'),
-                              subtitle: Text(
-                                  timeago.format(ds['createdAt'].toDate())),
-                            ),
-                            Text('${ds['title']}',
-                                style: TextStyle(fontSize: 18)),
-                            SizedBox(height: 10),
-                            Image.network('${ds['url']}',
-                                height: 250,
-                                width: double.infinity,
-                                fit: BoxFit.cover),
-                            Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.favorite_border),
-                                    ),
-                                    Text('16')
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.comment),
-                                    ),
-                                    Text('16')
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      );
+                      // get data from ds (DocmentSnapshot)
+                      String username = ds['username'];
+                      String title = ds['title'];
+                      String url = ds['url'];
+                      String postedDate =
+                          timeago.format(ds['createdAt'].toDate());
+                      String id = ds.id;
+                      List<dynamic>? likes = ds['likes'];
+
+                      return CardWidget(
+                          username: username,
+                          title: title,
+                          url: url,
+                          postedDate: postedDate,
+                          id: id,
+                          likes: likes);
                     });
               } else {
                 return Center(child: CircularProgressIndicator());

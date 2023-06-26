@@ -36,11 +36,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         'username': _usernameController.text,
         'email': _emailController.text,
         'password': _passwordController.text,
+        'profile': '',
       }).then((value) => {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Register Successful!')))
+                    const SnackBar(content: Text('Register Successful!'))),
+                Navigator.pushNamed(context, '/login')
               });
     } catch (e) {
+      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Register Error!')));
     }

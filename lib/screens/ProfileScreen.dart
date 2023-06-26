@@ -30,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String? firstname = Provider.of<AppData>(context, listen: false).firstname;
     String? lastname = Provider.of<AppData>(context, listen: false).lastname;
     String? email = Provider.of<AppData>(context, listen: false).email;
+    String? profile = Provider.of<AppData>(context, listen: false).profile;
 
     return Scaffold(
         appBar: AppBar(
@@ -44,7 +45,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 20),
             CircleAvatar(
               radius: 50,
-              backgroundImage: Image.asset('assets/icons/profile.png').image,
+              
+              backgroundImage: profile == null
+                  ? const AssetImage('assets/images/profile.png')
+                  : Image.network(profile).image,
+
             ),
             const SizedBox(height: 20),
             Text("$firstname $lastname", style: TextStyle(fontSize: 20)),

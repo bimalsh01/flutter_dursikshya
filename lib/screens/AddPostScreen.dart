@@ -63,7 +63,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     } catch (e) {
       print('Failed to uload image $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Failed to uload image'),
         ),
       );
@@ -76,6 +76,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         username: username,
         createdAt: DateTime.now(),
         url: url,
+        likes: [],
       );
 
       // add post to firestore

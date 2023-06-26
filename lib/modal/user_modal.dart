@@ -3,8 +3,9 @@ class UserModal {
   String? lastname;
   String? email;
   String? username;
+  String? profile;
 
-  UserModal({this.firstname, this.lastname, this.email, this.username});
+  UserModal({this.firstname, this.lastname, this.email, this.username, this.profile});
 
   // convert firebase firestore data to dart object
   UserModal fromJson(Map<String, dynamic> json) {
@@ -12,7 +13,8 @@ class UserModal {
         firstname: json['firstname'],
         lastname: json['lastname'],
         email: json['email'],
-        username: json['username']);
+        username: json['username'],
+        profile: json['profile']);
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +23,7 @@ class UserModal {
       'lastname': lastname,
       'email': email,
       'username': username,
+      'profile': profile
     };
   }
 }

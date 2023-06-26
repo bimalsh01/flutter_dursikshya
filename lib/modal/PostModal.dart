@@ -4,6 +4,7 @@ class PostModal {
   String? username;
   DateTime? createdAt;
   String? url;
+  List<String>? likes;
 
   PostModal({
     required this.title,
@@ -11,6 +12,7 @@ class PostModal {
     this.username,
     this.createdAt,
     this.url,
+    this.likes,
   });
 
   Map<String, dynamic> toJson() {
@@ -20,6 +22,7 @@ class PostModal {
       'username': username,
       'createdAt': createdAt,
       'url': url,
+      'likes': likes,
     };
   }
 }

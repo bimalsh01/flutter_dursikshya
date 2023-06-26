@@ -6,13 +6,15 @@ class AppData extends ChangeNotifier {
   String? lastname;
   String? email;
   String? username;
+  String? profile;
 
   void updateUser(
-      String firstname, String lastname, String email, String username) {
+      String firstname, String lastname, String email, String username, String profile) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
     this.username = username;
+    this.profile = profile;
     saveData();
     notifyListeners();
   }
@@ -24,6 +26,7 @@ class AppData extends ChangeNotifier {
     prefs.setString('lastname', lastname!);
     prefs.setString('email', email!);
     prefs.setString('username', username!);
+    prefs.setString('profile', profile!);
   }
 
   // Load data from shared preferences
@@ -33,6 +36,7 @@ class AppData extends ChangeNotifier {
     lastname = prefs.getString('lastname') ?? '';
     email = prefs.getString('email') ?? '';
     username = prefs.getString('username') ?? '';
+    profile = prefs.getString('profile') ?? '';
     notifyListeners();
   }
 }
