@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatefulWidget {
@@ -22,6 +24,43 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
+  int likeCount = 0;
+  bool isLiked = false;
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+
+  @override
+  void initState() {
+    likeCount = widget.likes!.length;
+    super.initState();
+  }
+
+  void handleLike() async {
+    if (isLiked) {
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.id)
+          .update({
+        'likes': FieldValue.arrayRemove([userId])
+      });
+      setState(() {
+        isLiked = false;
+        likeCount--;
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.id)
+          .update({
+        'likes': FieldValue.arrayUnion([userId])
+      });
+
+      setState(() {
+        isLiked = true;
+        likeCount++;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -29,12 +68,12 @@ class _CardWidgetState extends State<CardWidget> {
         children: [
           ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('@username'),
-            subtitle: Text('2 days ago'),
+            title: Text('@${widget.username}'),
+            subtitle: Text(widget.postedDate),
           ),
           Text(widget.title, style: TextStyle(fontSize: 18)),
           SizedBox(height: 10),
-          Image.network('',
+          Image.network(widget.url,
               height: 250, width: double.infinity, fit: BoxFit.cover),
           Row(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,10 +81,13 @@ class _CardWidgetState extends State<CardWidget> {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.favorite_border),
-                  ),
-                  Text('16')
+                      onPressed: () {
+                        handleLike();
+                      },
+                      icon: isLiked
+                          ? Icon(Icons.favorite, color: Colors.red)
+                          : Icon(Icons.favorite_border)),
+                  Text('$likeCount')
                 ],
               ),
               Row(
