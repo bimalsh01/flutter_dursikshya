@@ -43,6 +43,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           timeago.format(ds['createdAt'].toDate());
                       String id = ds.id;
                       List<dynamic>? likes = ds['likes'];
+                      // get comments list
+                      List<dynamic>? comments = ds['comments'];
 
                       return CardWidget(
                           username: username,
@@ -50,6 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           url: url,
                           postedDate: postedDate,
                           id: id,
+                          comments: comments,
                           likes: likes);
                     });
               } else {
