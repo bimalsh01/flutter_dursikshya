@@ -7,7 +7,7 @@ class PostModal {
   DateTime? createdAt;
   String? url;
   List<String>? likes;
-  List<Comment>? comments; // Add comments list
+  List<Comments>? comments;
 
   PostModal({
     required this.title,
@@ -16,7 +16,7 @@ class PostModal {
     this.createdAt,
     this.url,
     this.likes,
-    this.comments, // Initialize comments list
+    this.comments,
   });
 
   Map<String, dynamic> toJson() {
@@ -27,8 +27,7 @@ class PostModal {
       'createdAt': createdAt,
       'url': url,
       'likes': likes,
-      'comments': comments?.map((comment) => comment.toJson()).toList(), // Convert comments to JSON
+      'comments': comments?.map((comment) => comment.toJson()).toList()
     };
   }
 }
-

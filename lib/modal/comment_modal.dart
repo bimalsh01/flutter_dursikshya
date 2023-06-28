@@ -1,16 +1,14 @@
-class Comment {
-  String username;
-  String comment;
+class Comments {
+  String? username;
+  String? comment;
+  String? profileUrl;
 
-  Comment({
-    required this.username,
-    required this.comment,
-  });
+  Comments({this.username, this.comment, this.profileUrl});
 
-  Map<String, dynamic> toJson() {
-    return {
-      'username': username,
-      'comment': comment,
-    };
-  }
+  // to json
+  Map<String, dynamic> toJson() => {
+        'username': username,
+        'comment': comment,
+        'profileUrl': profileUrl,
+      };
 }

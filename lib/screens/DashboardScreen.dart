@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:traveldiary/state%20management/appdata.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:traveldiary/widgets/CardWidget.dart';
 
@@ -43,7 +41,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           timeago.format(ds['createdAt'].toDate());
                       String id = ds.id;
                       List<dynamic>? likes = ds['likes'];
-                      // get comments list
                       List<dynamic>? comments = ds['comments'];
 
                       return CardWidget(
@@ -52,8 +49,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           url: url,
                           postedDate: postedDate,
                           id: id,
-                          comments: comments,
-                          likes: likes);
+                          likes: likes,
+                          comments: comments);
                     });
               } else {
                 return Center(child: CircularProgressIndicator());
