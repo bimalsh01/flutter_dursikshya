@@ -36,7 +36,7 @@ void main() async {
           '/profile': (context) => const ProfileScreen(),
           '/myposts': (context) => const MyPostScreen(),
           '/editprofile': (context) => const EditProfileScreen(),
-          '/comments': (context) => const CommentScreen(),
+          '/comments': (context) => CommentScreen(postId: ''),
         },
       )));
 }

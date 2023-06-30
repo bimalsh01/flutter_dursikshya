@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:traveldiary/screens/CommentScreen.dart';
 
 class CardWidget extends StatefulWidget {
   final String username;
@@ -63,6 +64,23 @@ class _CardWidgetState extends State<CardWidget> {
     }
   }
 
+  // navigate to comment screen with arguments
+  void navigateToCommentScreen() {
+    // Navigator.pushNamed(context, '/comments', arguments: {
+    //   'postId': widget.id,
+    //   'comments': widget.comments,
+    // });
+    // build material
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CommentScreen(
+                  postId: widget.id,
+                  comments: widget.comments,
+                )));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -96,7 +114,7 @@ class _CardWidgetState extends State<CardWidget> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/comments');
+                      navigateToCommentScreen();
                     },
                     icon: Icon(Icons.comment),
                   ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CommentScreen extends StatefulWidget {
-  const CommentScreen({super.key});
+  final String postId;
+  List<dynamic>? comments;
+
+  CommentScreen({required this.postId, this.comments, super.key});
 
   @override
   State<CommentScreen> createState() => _CommentScreenState();
@@ -10,9 +13,17 @@ class CommentScreen extends StatefulWidget {
 class _CommentScreenState extends State<CommentScreen> {
   // controller
   final TextEditingController _commentController = TextEditingController();
+  List<dynamic>? commentLists;
+
+  @override
+  void initState() {
+    commentLists = widget.comments;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Comments'),
@@ -24,7 +35,7 @@ class _CommentScreenState extends State<CommentScreen> {
         children: [
           Expanded(
               child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: commentLists!.length,
                   itemBuilder: (context, index) {
                     return const ListTile(
                       leading: CircleAvatar(
