@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:traveldiary/screens/AddPostScreen.dart';
 import 'package:traveldiary/screens/DashboardScreen.dart';
 import 'package:traveldiary/screens/ProfileScreen.dart';
+import 'package:traveldiary/screens/SearchScreen.dart';
 import 'package:traveldiary/state%20management/appdata.dart';
 
 class BottomNavbarScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
   // list of screens
   List<Widget> lstWidget = [
     const DashboardScreen(),
+    const SearchScreen(),
     const AddPostScreen(),
     const ProfileScreen(),
   ];
@@ -31,6 +33,11 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+            backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
             backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
