@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,11 +27,14 @@ class _SearchScreenState extends State<SearchScreen> {
               padding: EdgeInsets.all(8.0),
               child: CupertinoTextField(
                 controller: _searchController,
+                onChanged: (value) {
+                  setState(() {});
+                },
                 placeholder: 'Search posts',
                 autofocus: true,
-                prefix: Padding(
+                prefix: const Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.search),
+                  child: const Icon(Icons.search),
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -43,6 +47,39 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: const Icon(Icons.clear),
                 ),
               ),
+            ),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('posts')
+                      .where('title',
+                          isGreaterThanOrEqualTo: _searchController.text)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CupertinoActivityIndicator(),
+                      );
+                    }
+
+                    final List<DocumentSnapshot> posts = snapshot.data!.docs;
+
+                    return ListView.builder(
+                        itemCount: posts.length,
+                        itemBuilder: (context, index) {
+                          if (_searchController.text.isEmpty) {
+                            return Container();
+                          }
+
+                          return ListTile(
+                            title: Text(posts[index]['title']),
+                          );
+                        });
+                  }),
             )
           ],
         ));

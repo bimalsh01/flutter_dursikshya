@@ -92,7 +92,7 @@ class _CardWidgetState extends State<CardWidget> {
             subtitle: Text(widget.postedDate),
           ),
           Text(widget.title, style: TextStyle(fontSize: 18)),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Image.network(widget.url,
               height: 250, width: double.infinity, fit: BoxFit.cover),
           Row(

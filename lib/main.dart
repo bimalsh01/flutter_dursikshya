@@ -24,7 +24,7 @@ void main() async {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/splash',
+        initialRoute: '/',
         routes: {
           '/': (context) => const TestScreen(),
           '/splash': (context) => const SplashScreen(),
@@ -37,6 +37,7 @@ void main() async {
           '/myposts': (context) => const MyPostScreen(),
           '/editprofile': (context) => const EditProfileScreen(),
           '/comments': (context) => CommentScreen(postId: ''),
+          '/test': (context) => const TestScreen(),
         },
       )));
 }
