@@ -1,8 +1,8 @@
 import 'package:traveldiary/modal/comment_modal.dart';
 
 class PostModal {
-  String title;
-  String userId;
+  String? title;
+  String? userId;
   String? username;
   DateTime? createdAt;
   String? url;
@@ -10,8 +10,8 @@ class PostModal {
   List<Comments>? comments;
 
   PostModal({
-    required this.title,
-    required this.userId,
+     this.title,
+     this.userId,
     this.username,
     this.createdAt,
     this.url,
@@ -30,4 +30,16 @@ class PostModal {
       'comments': comments?.map((comment) => comment.toJson()).toList()
     };
   }
+
+
+  
+
+  // form map
+  PostModal.fromMap(Map<String, dynamic> json)
+      : title = json['title'],
+        userId = json['userId'],
+        username = json['username'],
+        createdAt = json['createdAt'].toDate(),
+        url = json['url'],
+        likes = json['likes'].cast<String>();
 }

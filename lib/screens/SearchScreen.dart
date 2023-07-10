@@ -51,8 +51,8 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
-                      .collection('posts')
-                      .where('title',
+                      .collection('users')
+                      .where('username',
                           isGreaterThanOrEqualTo: _searchController.text)
                       .snapshots(),
                   builder: (context, snapshot) {
@@ -66,17 +66,29 @@ class _SearchScreenState extends State<SearchScreen> {
                       );
                     }
 
-                    final List<DocumentSnapshot> posts = snapshot.data!.docs;
+                    final List<DocumentSnapshot> users = snapshot.data!.docs;
 
                     return ListView.builder(
-                        itemCount: posts.length,
+                        itemCount: users.length,
                         itemBuilder: (context, index) {
                           if (_searchController.text.isEmpty) {
                             return Container();
                           }
 
-                          return ListTile(
-                            title: Text(posts[index]['title']),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/otheruser',
+                                  arguments: users[index].data());
+                            },
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: NetworkImage(users[index]
+                                        ['profile'] ??
+                                    'https://picsum.photos/200'),
+                              ),
+                              title: Text(users[index]['username']),
+                              subtitle: Text(users[index]['email']),
+                            ),
                           );
                         });
                   }),

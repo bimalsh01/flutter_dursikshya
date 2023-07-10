@@ -8,6 +8,7 @@ import 'package:traveldiary/screens/DashboardScreen.dart';
 import 'package:traveldiary/screens/EditProfileScreen.dart';
 import 'package:traveldiary/screens/LoginScreen.dart';
 import 'package:traveldiary/screens/MyPostScreen.dart';
+import 'package:traveldiary/screens/OtherUserScreen.dart';
 import 'package:traveldiary/screens/ProfileScreen.dart';
 import 'package:traveldiary/screens/RegisterScreen.dart';
 import 'package:traveldiary/screens/SplashScreen.dart';
@@ -24,7 +25,7 @@ void main() async {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/',
+        initialRoute: '/splash',
         routes: {
           '/': (context) => const TestScreen(),
           '/splash': (context) => const SplashScreen(),
@@ -38,6 +39,7 @@ void main() async {
           '/editprofile': (context) => const EditProfileScreen(),
           '/comments': (context) => CommentScreen(postId: ''),
           '/test': (context) => const TestScreen(),
+          '/otheruser': (context) => const OtherUserScreen(),
         },
       )));
 }
